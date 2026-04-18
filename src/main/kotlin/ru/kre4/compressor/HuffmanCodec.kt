@@ -45,7 +45,7 @@ class HuffmanCodec {
         val writer = BitWriter()
         for (b in input) {
             val symbol = b.toUnsignedByte()
-            val code = codeTable[symbol] ?: error("Missing code for symbol $symbol")
+            val code = codeTable[symbol]!!
             writer.writeBits(code)
         }
 
@@ -59,7 +59,7 @@ class HuffmanCodec {
 
         val root = buildTree(frequencies)
         if (root.isLeaf) {
-            val symbol = root.symbol ?: error("Leaf without symbol.")
+            val symbol = root.symbol!!
             return ByteArray(outputSize) { symbol.toByte() }
         }
 
@@ -70,14 +70,14 @@ class HuffmanCodec {
 
         while (written < outputSize) {
             val bit = reader.readBit()
-            current = if (bit == 0) {
-                current.left ?: error("Malformed Huffman stream: missing left child.")
+            current = (if (bit == 0) {
+                current.left
             } else {
-                current.right ?: error("Malformed Huffman stream: missing right child.")
-            }
+                current.right
+            })!!
 
             if (current.isLeaf) {
-                out[written++] = (current.symbol ?: error("Leaf without symbol.")).toByte()
+                out[written++] = (current.symbol)!!.toByte()
                 current = root
             }
         }
@@ -112,7 +112,7 @@ class HuffmanCodec {
 
     private fun buildCodes(node: Node, prefix: String, table: Array<String?>) {
         if (node.isLeaf) {
-            val symbol = node.symbol ?: error("Leaf without symbol.")
+            val symbol = node.symbol!!
             table[symbol] = if (prefix.isEmpty()) "0" else prefix
             return
         }

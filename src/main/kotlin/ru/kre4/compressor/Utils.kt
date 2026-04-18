@@ -35,7 +35,7 @@ class BitReader(private val bytes: ByteArray, private val bitLength: Int) {
     private var pos = 0
 
     fun readBit(): Int {
-        require(pos < bitLength) { "Attempt to read beyond Huffman bit stream." }
+        require(pos < bitLength)
         val byteIndex = pos / 8
         val bitIndex = 7 - (pos % 8)
         val bit = (bytes[byteIndex].toInt() ushr bitIndex) and 1

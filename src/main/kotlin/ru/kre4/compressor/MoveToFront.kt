@@ -41,7 +41,7 @@ class MoveToFront {
                 return i
             }
         }
-        throw IllegalStateException("Symbol $value not found in MTF alphabet.")
+        throw IllegalStateException("Symbol $value not found")
     }
 
     private fun moveToFront(symbols: IntArray, pos: Int) {

@@ -4,22 +4,16 @@ import ru.kre4.compressor.extensions.toUnsignedByte
 import kotlin.math.ln
 
 /**
- * Оценки энтропии (бит/символ).
- *
- * Используемые формулы:
- *
  * H(X) = - sum (p(x) log2 p(x))
  *
  * H(X|X) = H(X_n | X_{n-1})
  *        = - sum ( p(x,y) log2 p(y|x))
- *        = -Σ_{x,y} p(x,y) log2 ( p(x,y) / p(x) )
+ *        = - sum ( p(x,y) log2 ( p(x,y) / p(x) ) )
  *
  * H(X|XX) = H(X_n | X_{n-2}, X_{n-1})
  *         = - sum ( p(x,y,z) log2 p(z|x,y) )
  *         = - sum ( p(x,y,z) log2 ( p(x,y,z) / p(x,y) ) )
  *
- * В коде вероятности заменяются частотными оценками:
- * p(x) ≈ count(x)/N, p(x,y) ≈ count(x,y)/(N-1), p(x,y,z) ≈ count(x,y,z)/(N-2).
  */
 object EntropyEstimator {
 

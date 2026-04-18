@@ -30,9 +30,7 @@ class BurrowsWheelerTransform {
             result[i] = block[lastPos]
         }
 
-        if (primary < 0) {
-            throw IllegalStateException("Failed to determine BWT primary index.")
-        }
+        require(primary >= 0)
 
         return EncodedBlock(primary, result)
     }
@@ -42,7 +40,7 @@ class BurrowsWheelerTransform {
             return ByteArray(0)
         }
         val n = transformed.size
-        require(primaryIndex in 0 until n) { "Invalid BWT primary index: $primaryIndex for block size $n." }
+        require(primaryIndex in 0 until n)
 
         val count = IntArray(256)
         for (b in transformed) {
